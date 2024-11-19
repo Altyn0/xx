@@ -66,6 +66,7 @@ int main()
 */
 
 /*
+// bai so 3 hoan doi vi tri 
 void swap(int *a,int *b){
     int temp;
     temp = *a;
@@ -85,5 +86,75 @@ int main(){
 }
 
 */
-//bai so 3 hoan doi vi tri 
+
+/*
+// bang cuu chuong nhan tu 2 den 9
+int main() {
+    // Vòng lap cho cac so tu 1 đến 9 (hang dic)
+    for (int i = 1; i <= 9; i++) {
+        // Vòng lặp cho các số từ 2 đến 9 (hang ngang)
+        for (int j = 2; j <= 9; j++) {
+            printf("%d x %d = %2d\t", j, i, j * i); // In kết quả nhân
+        }
+        printf("\n"); // Xuống dòng sau mỗi hàng dọc
+    }
+
+    return 0;
+}
+*/
+
+/*
+// in hinh chu nhat sao rong .
+int main() {
+    int width, height;
+
+    // Nhập chiều rộng và chiều cao của hình chữ nhật
+    printf("Nhập chiều rộng của hình chữ nhật: ");
+    scanf("%d", &width);
+    printf("Nhập chiều cao của hình chữ nhật: ");
+    scanf("%d", &height);
+
+    // Duyệt qua từng hàng
+    for (int i = 1; i <= height; i++) {
+        for (int j = 1; j <= width; j++) {
+            // In sao cho viền (hàng đầu, hàng cuối, cột đầu, cột cuối)
+            if (i == 1 || i == height || j == 1 || j == width) {
+                printf("*");
+            } else {
+                printf(" "); // Bên trong là khoảng trắng
+            }
+        }
+        printf("\n"); // Xuống dòng sau mỗi hàng
+    }
+
+    return 0;
+}
+*/
+
+//tao hinh tam giac 
+int main() {
+    int n, i, j;
+
+    // Yêu cầu người dùng nhập chiều cao của hình tam giác
+    printf("Nhập chiều cao của hình tam giác: ");
+    scanf("%d", &n);
+
+    // Vòng lặp để tạo hình tam giác
+    for (i = 1; i <= n; i++) {
+        // Hiển thị khoảng trắng
+        for(j = 1; j <= n - i; j++) {
+            printf(" ");
+        }
+        // Hiển thị các ngôi sao
+        for (j = 1; j <= 2 * i - 1; j++) {
+            printf("*");
+        }
+        // Chuyển sang dòng tiếp theo
+        printf("\n");
+    }
+
+   return 0;
+}
+
+
 
