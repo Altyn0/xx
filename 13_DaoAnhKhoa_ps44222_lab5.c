@@ -27,6 +27,9 @@ int main(){
 }
 */
 
+/*
+//xay dung ham tinh nam nhuan
+
 int checkYear(int year)
 {
     int flag = 0; // bien co hieu, mac dinh la so 0 (khong phai nam nhuan)
@@ -59,3 +62,28 @@ int main()
         printf("%d khong phai la nam nhuan.\n", year);
     }
 }
+
+*/
+
+/*
+void swap(int *a,int *b){
+    int temp;
+    temp = *a;
+    *a = *b;
+    *b =temp;
+}
+
+int main(){
+    int a,b;
+    printf("Nhap gia tri a: ");
+    scanf("%d",&a);
+    printf("Nhap gia tri b: ");
+    scanf("%d",&b);
+    printf("Truoc khi hoan vi: a = %d , b = %d \n",a,b);
+    swap(&a,&b);
+    printf("Sau khi hoan vi : a = %d, b = %d\n",a,b);
+}
+
+*/
+//bai so 3 hoan doi vi tri 
+
