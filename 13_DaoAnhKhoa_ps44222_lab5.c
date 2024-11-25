@@ -102,7 +102,7 @@ int main() {
 
 
 
-/*
+
 // in hinh chu nhat sao rong .
 int main() {
     int width, height;
@@ -128,10 +128,9 @@ int main() {
 
     return 0;
 }
-*/
 
 
-
+/*
 // tao hinh tam giac
 int main(void)
 {
@@ -161,6 +160,9 @@ int main(void)
     return 0;
 }
 
+
+
+*/
 
 
 
