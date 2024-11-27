@@ -1,6 +1,6 @@
 #include <stdio.h> // Thư viện chuẩn cho các hàm nhập xuất
 
-int main() {
+int main(void) {
     int choice; // Biến để lưu lựa chọn bài toán của người dùng
 
     do {
