@@ -92,8 +92,8 @@ int main()
         case 3:
         {
             int startHour, endHour; // Khai báo giờ bắt đầu và giờ kết thúc
-            double totalCost;          // Tổng tiền phải trả
-            double discount = 1.0;   // Mức giảm giá ban đầu là 1 (không giảm giá)
+            double totalCost;       // Tổng tiền phải trả
+            double discount = 1.0;  // Mức giảm giá ban đầu là 1 (không giảm giá)
 
             // Nhập vào giờ bắt đầu và giờ kết thúc
             printf("Nhập vào giờ bắt đầu (12-23): ");
@@ -138,45 +138,98 @@ int main()
         case 4:
         {
             printf("chuc nang tinh tien dien dang thuc hien \n");
-              printf("Chuong trinh xay dung tinh tien dien \n");
-        float kwh, tiendien = 0;
-        printf("\nNhap so dien tieu thu cua ban");
-        scanf("%f", &kwh);
-        if (kwh <= 50)
-        {
-            tiendien = kwh * 1678;
+            printf("Chuong trinh xay dung tinh tien dien \n");
+            float kwh, tiendien = 0;
+            printf("\nNhap so dien tieu thu cua ban");
+            scanf("%f", &kwh);
+            if (kwh <= 50)
+            {
+                tiendien = kwh * 1678;
+            }
+            else if (kwh <= 100)
+            {
+                tiendien = 50 * 1678 + (kwh - 50) * 1734;
+            }
+            else if (kwh <= 200)
+            {
+                tiendien = 50 * 1678 + 50 * 1734 + (kwh - 100) * 2014;
+            }
+            else if (kwh <= 300)
+            {
+                tiendien = 50 * 1678 + 50 * 1734 + 100 * 2014 + (kwh - 200) * 2536;
+            }
+            else if (kwh <= 400)
+            {
+                tiendien = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + (kwh - 300) * 2834;
+            }
+            else
+            {
+                tiendien = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + 100 * 2834 + (kwh - 400) * 2927;
+            }
+            printf("So tien dien ban can phai tra la : %.2f", tiendien);
         }
-        else if (kwh <= 100)
-        {
-            tiendien = 50 * 1678 + (kwh - 50) * 1734;
-        }
-        else if (kwh <= 200)
-        {
-            tiendien = 50 * 1678 + 50 * 1734 + (kwh - 100) * 2014;
-        }
-        else if (kwh <= 300)
-        {
-            tiendien = 50 * 1678 + 50 * 1734 + 100 * 2014 + (kwh - 200) * 2536;
-        }
-        else if (kwh <= 400)
-        {
-            tiendien = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + (kwh - 300) * 2834;
-        }
-        else
-        {
-            tiendien = 50 * 1678 + 50 * 1734 + 100 * 2014 + 100 * 2536 + 100 * 2834 + (kwh - 400) * 2927;
-        }
-        printf("So tien dien ban can phai tra la : %.2f", tiendien);
-    }
         break;
         case 5:
         {
             printf("chuc nang quy doi tien dang thuc hien");
+            {
+                int amount;                                                                // Khai báo biến để lưu số tiền cần đổi
+                int denominations[] = {500, 200, 100, 50, 20, 10, 5, 2, 1};                // Mảng các mệnh giá tiền
+                int numOfDenominations = sizeof(denominations) / sizeof(denominations[0]); // Tính số lượng mệnh giá tiền
+
+                // Nhập vào số tiền cần đổi
+                printf("Nhập vào số tiền cần đổi: ");
+                scanf("%d", &amount);
+
+                // Kiểm tra nếu số tiền nhỏ hơn hoặc bằng 0
+                if (amount <= 0)
+                {
+                    printf("Số tiền cần đổi phải lớn hơn 0.\n");
+                    break;
+                }
+
+                printf("Số tiền cần đổi là: %d đồng\n", amount);
+                printf("Các mệnh giá tiền cần đổi là:\n");
+
+                // Lặp qua từng mệnh giá tiền và tính số lượng tờ cần đổi
+                for (int i = 0; i < numOfDenominations; i++)
+                {
+                    int count = amount / denominations[i]; // Tính số tờ cho mệnh giá hiện tại
+                    if (count > 0)
+                    {
+                        printf("%d tờ %d đồng\n", count, denominations[i]); // In kết quả
+                    }
+                    amount %= denominations[i]; // Cập nhật số tiền còn lại
+                }
+            }
         }
-        break;
+            break;
         case 6:
         {
-            printf("tinh lai suat vay ngan hang dang thuc hien\n");
+             double loanAmount, interestRate = 0.05, totalAmount, interestPayment, principalPayment, monthlyPayment;
+            int months = 12;
+
+            // Nhập số tiền vay từ người dùng
+            printf("Nhap so tien vay: ");
+            scanf("%lf", &loanAmount);  // Nhập số tiền vay
+
+            // Tính số tiền trả mỗi tháng (gốc)
+            monthlyPayment = loanAmount / months;
+            totalAmount = loanAmount;
+
+            // In tiêu đề bảng
+            printf("\nChi tiet so tien can tra trong 12 thang:\n");
+            printf("%-10s%-20s%-20s%-20s%-20s\n", "Ky han", "Lai phai tra", "Goc phai tra", "So tien phai tra", "So tien con lai");
+
+            // Lặp qua 12 tháng để tính toán tiền lãi, gốc và tổng tiền phải trả
+            for (int i = 1; i <= months; i++) {
+                interestPayment = totalAmount * interestRate;  // Tính tiền lãi
+                principalPayment = monthlyPayment;  // Tiền gốc phải trả mỗi tháng
+                totalAmount -= principalPayment;  // Giảm số tiền còn lại sau khi trả gốc
+
+                // In thông tin cho từng tháng, bao gồm lãi, gốc, tổng tiền phải trả và số tiền còn lại
+                printf("%-10d%-20.2lf%-20.2lf%-20.2lf%-20.2lf\n", i, interestPayment, principalPayment, interestPayment + principalPayment, totalAmount);
+            }
         }
         break;
         case 7:
@@ -210,11 +263,11 @@ int main()
             printf("Vui long chon lai lua chon co san");
             break;
         }
+            printf("\n------------------------------------------\n");
+        }
+
+        while (menu != 0)
+            ;
         printf("\n------------------------------------------\n");
-
+        return 0;
     }
-
-    while (menu != 0);
-    printf("\n------------------------------------------\n");
-    return 0;
-}
