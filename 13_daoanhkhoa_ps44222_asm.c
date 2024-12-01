@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include <math.h>
+#include <string.h>
+#include <time.h>
 int main()
 {
     int menu;
@@ -203,15 +206,16 @@ int main()
                 }
             }
         }
-            break;
+        break;
         case 6:
         {
-             double loanAmount, interestRate = 0.05, totalAmount, interestPayment, principalPayment, monthlyPayment;
+            // Total loanamout(số tiền vay), totalamount(Tổng số tiền), interestPayment(lãi suấtThanh toán),principalPayment(tiền gốc Thanh toán),monthlypayment(Thanh toán hàng tháng)
+            double loanAmount, interestRate = 0.05, totalAmount, interestPayment, principalPayment, monthlyPayment;
             int months = 12;
 
             // Nhập số tiền vay từ người dùng
             printf("Nhap so tien vay: ");
-            scanf("%lf", &loanAmount);  // Nhập số tiền vay
+            scanf("%lf", &loanAmount); // Nhập số tiền vay
 
             // Tính số tiền trả mỗi tháng (gốc)
             monthlyPayment = loanAmount / months;
@@ -222,10 +226,11 @@ int main()
             printf("%-10s%-20s%-20s%-20s%-20s\n", "Ky han", "Lai phai tra", "Goc phai tra", "So tien phai tra", "So tien con lai");
 
             // Lặp qua 12 tháng để tính toán tiền lãi, gốc và tổng tiền phải trả
-            for (int i = 1; i <= months; i++) {
-                interestPayment = totalAmount * interestRate;  // Tính tiền lãi
-                principalPayment = monthlyPayment;  // Tiền gốc phải trả mỗi tháng
-                totalAmount -= principalPayment;  // Giảm số tiền còn lại sau khi trả gốc
+            for (int i = 1; i <= months; i++)
+            {
+                interestPayment = totalAmount * interestRate; // Tính tiền lãi
+                principalPayment = monthlyPayment;            // Tiền gốc phải trả mỗi tháng
+                totalAmount -= principalPayment;              // Giảm số tiền còn lại sau khi trả gốc
 
                 // In thông tin cho từng tháng, bao gồm lãi, gốc, tổng tiền phải trả và số tiền còn lại
                 printf("%-10d%-20.2lf%-20.2lf%-20.2lf%-20.2lf\n", i, interestPayment, principalPayment, interestPayment + principalPayment, totalAmount);
@@ -235,16 +240,166 @@ int main()
         case 7:
         {
             printf("chuc nang vay tien mua xe dang thuc hien \n");
+            // Khai báo các biến cần thiết
+            int maxPercentage;               // Tỷ lệ vay tối đa (phần trăm)
+            double loanAmount = 500000000;   // Số tiền vay cố định: 500 triệu
+            int loanTermYears = 24;          // Thời hạn vay: 24 năm
+            double annualInterestRate = 7.2; // Lãi suất cố định: 7.2% mỗi năm
+            double downPayment;              // Số tiền trả trước
+            double monthlyPayment;           // Số tiền trả góp hàng tháng
+            double interestPerMonth;         // Lãi suất hàng tháng
+            int totalMonths;                 // Tổng số tháng vay
+            double totalPaid;                // Tổng số tiền phải trả cả gốc lẫn lãi
+
+            // Nhập tỷ lệ vay tối đa từ người dùng
+            printf("Nhap so phan tram vay toi da (VD: 80 - la tra truoc 20%%): ");
+            scanf("%d", &maxPercentage);
+
+            // Tính số tiền trả trước (downPayment)
+            downPayment = loanAmount * (1 - (maxPercentage / 100.0));
+
+            // Tính số tiền vay (phần còn lại)
+            loanAmount = loanAmount * (maxPercentage / 100.0);
+
+            // Tính tổng số tháng vay
+            totalMonths = loanTermYears * 12;
+
+            // Tính lãi suất hàng tháng
+            interestPerMonth = annualInterestRate / 100 / 12;
+
+            // Tính số tiền trả góp hàng tháng (dựa trên công thức toán tài chính)
+            monthlyPayment = loanAmount * (interestPerMonth / (1 - (1 / pow(1 + interestPerMonth, totalMonths))));
+
+            // Tính tổng số tiền phải trả cả gốc lẫn lãi
+            totalPaid = monthlyPayment * totalMonths;
+
+            // Hiển thị kết quả
+            printf("\nKet qua:\n");
+            printf("So tien tra truoc: %.2lf VND\n", downPayment);
+            printf("So tien phai tra gop hang thang: %.2lf VND\n", monthlyPayment);
+            printf("Tong so tien phai tra ca goc lan lai: %.2lf VND\n", totalPaid);
         }
         break;
         case 8:
         {
             printf("chuc nang sap xep thong sinh vien dang thuc hien \n");
+            int n;
+            printf("Nhap so luong sinh vien");
+            scanf("%d", &n);
+            // khai bao cau truc luu thong tin sinh vien
+            typedef struct SinhVien
+            {
+                char hoTen[50];
+                float diem;
+                char hocLuc[20];
+            };
+
+            struct SinhVien dsSinhVien[n]; // mang luu danh sach sinh vien .
+            // nhap thong tin sinh vien
+            for (int i = 0; i < n; i++)
+            {
+                printf("\nNhap Thong tin sinh vien thu %d:\n", i + 1);
+                // nhap ho ten
+                printf("Ho Ten: ");
+                fflush(stdin); // xoa bo nho dem tranh loi khi nhap chuoi
+                fgets(dsSinhVien[i].hoTen, sizeof(dsSinhVien[i].hoTen), stdin);
+                dsSinhVien[i].hoTen[strcspn(dsSinhVien[i].hoTen, "\n")] = '\0'; // xoa ky tu xuong dong
+                // nhap diem
+                printf("Diem: ");
+                scanf("%f", &dsSinhVien[i].diem);
+                // xac dinh hoc luc dua tren diem
+                if (dsSinhVien[i].diem >= 9)
+                    strcpy(dsSinhVien[i].hocLuc, "Xuất Sắc");
+                else if (dsSinhVien[i].diem >= 8)
+                    strcpy(dsSinhVien[i].hocLuc, "Giỏi");
+                else if (dsSinhVien[i].diem >= 6.5)
+                    strcpy(dsSinhVien[i].hocLuc, "Khá");
+                else if (dsSinhVien[i].diem >= 5)
+                    strcpy(dsSinhVien[i].hocLuc, "Trung Bình");
+                else if (dsSinhVien[i].diem >= 3.5)
+                    strcpy(dsSinhVien[i].hocLuc, "Yếu");
+                else
+                    strcpy(dsSinhVien[i].hocLuc, "Kém");
+            }
+            // sap xep sinh vien theo diem giam dan (bubble sort)
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    if (dsSinhVien[j].diem < dsSinhVien[j + 1].diem)
+                    {
+                        struct SinhVien temp = dsSinhVien[j];
+                        dsSinhVien[j] = dsSinhVien[j + 1];
+                        dsSinhVien[j + 1] = temp;
+                    }
+                }
+            }
+            // hien thi danh sach sinh vien sau khi sap xep
+            printf("\n Danh sách sau khi sắp xếp theo điểm giảm dần: \n ");
+            printf("%-30s%-10s%-20s\n", "Ho Ten", "Diem", "Hoc Luc"); // in tieu de cot
+
+            for (int i = 0; i < n; i++)
+            {
+                printf("%-30s%-10.2f%-20s\n", dsSinhVien[i].hoTen, dsSinhVien[i].diem, dsSinhVien[i].hocLuc);
+            }
         }
         break;
         case 9:
         {
             printf("chuc nang xay dung game fpoly-lott\n");
+            printf("Chào mừng bạn đến với game FPOLY-LOTT!\n");
+            int user_nums[2];     // Mảng lưu 2 số người chơi nhập
+            int random_nums[2];   // Mảng lưu 2 số ngẫu nhiên từ hệ thống
+            int match_count = 0;  // Biến đếm số lượng số trúng
+
+            // Khởi tạo seed cho hàm rand
+            srand(time(NULL));
+
+            // Sinh 2 số ngẫu nhiên từ 1 đến 15
+            random_nums[0] = rand() % 15 + 1;
+            do {
+                random_nums[1] = rand() % 15 + 1;
+            } while (random_nums[1] == random_nums[0]);
+
+            // Nhập 2 số từ bàn phím
+            for (int i = 0; i < 2; i++) {
+                do {
+                    printf("Nhập số thứ %d (01-15): ", i + 1);
+                    scanf("%d", &user_nums[i]);
+
+                    // Kiểm tra tính hợp lệ
+                    if (user_nums[i] < 1 || user_nums[i] > 15) {
+                        printf("Số không hợp lệ. Vui lòng nhập lại (01-15).\n");
+                    } else if (i == 1 && user_nums[1] == user_nums[0]) {
+                        printf("Số bị trùng với số đầu tiên. Vui lòng nhập lại.\n");
+                        user_nums[i] = 0; // Reset để nhập lại
+                    }
+                } while (user_nums[i] < 1 || user_nums[i] > 15 || (i == 1 && user_nums[1] == user_nums[0]));
+            }
+
+            // So sánh số người chơi nhập với số hệ thống
+            for (int i = 0; i < 2; i++) { 
+                for (int j = 0; j < 2; j++) {
+                    if (user_nums[i] == random_nums[j]) {
+                        match_count++;
+                        break; // Thoát khỏi vòng lặp trong trường hợp trùng
+                    }
+                }
+            }
+
+            // Hiển thị kết quả
+            printf("\nKết quả số ngẫu nhiên của hệ thống là: %d và %d\n", random_nums[0], random_nums[1]);
+            switch (match_count) {
+                case 0:
+                    printf("Chúc bạn may mắn lần sau!\n");
+                    break;
+                case 1:
+                    printf("Chúc mừng bạn đã trúng giải nhì!\n");
+                    break;
+                case 2:
+                    printf("Chúc mừng bạn đã trúng giải nhất!\n");
+                    break;
+            }
         }
         break;
         case 10:
@@ -263,11 +418,10 @@ int main()
             printf("Vui long chon lai lua chon co san");
             break;
         }
-            printf("\n------------------------------------------\n");
-        }
-
-        while (menu != 0)
-            ;
         printf("\n------------------------------------------\n");
-        return 0;
     }
+
+    while (menu != 0);
+    printf("\n------------------------------------------\n");
+    return 0;
+}
